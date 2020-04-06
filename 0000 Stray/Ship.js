@@ -14,7 +14,6 @@ function Ship(x, y) {
 
   // Thrusters
   const thrusters = new Thrusters(this.pos, battery);
-  this.vel.limit(thrusters.maxSpeed);
 
 
   this.update = function() {
@@ -22,6 +21,7 @@ function Ship(x, y) {
 
     if (thrusters.firing ) {
       this.vel.add(thrusters.acceleration);
+      this.vel.limit(thrusters.maxSpeed);
     }
       
     this.pos.add(this.vel);
@@ -41,5 +41,6 @@ function Ship(x, y) {
 
     // Draw components
     thrusters.display(this.pos, this.size);
+    battery.display();
   }
 }

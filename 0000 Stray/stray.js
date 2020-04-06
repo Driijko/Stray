@@ -13,7 +13,6 @@ function setup() {
 
 
 function draw() {
-  keyPressed();
 
   background(0);
 
@@ -25,5 +24,6 @@ function draw() {
   camera.followShip();
 
   ship.display();
+  
 
 }
