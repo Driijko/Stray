@@ -1,22 +1,32 @@
 function Thrusters(pos, battery) {
 
-  // CONSTANTS
-  this.maxSpeed = 2;
-  const accelerationRate = 0.01;
-  const blinkInterval = 20;
-  const blinkIntervalLightUp = 5;
-  const rotationSpeed = 2;
-
-  const energySource = battery;
-  const energyDrain = 1;
-
-  // VARIABLES
-  this.acceleration = createVector(0, 0);
+  // STATUS ////////////////////////////////////////////////////////////////////////
+  this.integrity = 100;
   this.on = true;
   this.firing = false;
+
+  // SPATIAL ///////////////////////////////////////////////////////////////////////
+  this.maxSpeed = 2;
+  const accelerationRate = 0.01;
+  const rotationSpeed = 2;
+  this.acceleration = createVector(0, 0);
   let angle = 0;
 
+  // ENERGY ////////////////////////////////////////////////////////////////////////
+  const energySource = battery;
+  const energyDrain = 1;
+  let emptyBatteryEvent = false;
+
+  // VISUAL ///////////////////////////////////////////////////////////////////////
+  const blinkInterval = 20;
+  const blinkIntervalLightUp = 5;
+
   this.update = function() {
+    if (battery.charge <= 0 && emptyBatteryEvent === false) {
+      this.on = false;
+      this.firing = false;
+      emptyBatteryEvent = true;
+    }
     if (this.on) {
 
       // Rotate Thrusters
@@ -33,9 +43,7 @@ function Thrusters(pos, battery) {
         if (this.firing === false) this.firing = true;
 
         // Drain Battery
-        if(energySource.drain(energyDrain) === false) {
-          ship.energyFailure = true;
-        };
+        energySource.drain(energyDrain);
 
         this.acceleration = p5.Vector.fromAngle(radians(angle));
         this.acceleration.setMag(accelerationRate);
@@ -67,14 +75,14 @@ function Thrusters(pos, battery) {
 
     // Counter-clockwise Rotation Indicator
     stroke(255);
-    if(keyIsDown(65)) {
+    if(keyIsDown(65) && this.on) {
       fill("red")
     }
     else fill(0);
     ellipse(20, -10, 15, 15);
 
     // Clockwise Rotation Indicator
-    if(keyIsDown(68)) {
+    if(keyIsDown(68) && this.on) {
       fill("red")
     }
     else fill(0);

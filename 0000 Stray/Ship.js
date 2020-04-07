@@ -1,13 +1,12 @@
 function Ship(x, y) {
 
-  // Spatial
+  // SPATIAL ///////////////////////////////////////////////////////////////////////////////
+
   this.pos = createVector(x, y);
   this.size = 50;
   this.vel = createVector(0, 0);
 
   // COMPONENTS //////////////////////////////////////////////////////////////////////////////
-
-  this.energyFailure = false;
 
   // Battery
   const battery = new Battery();
@@ -15,8 +14,20 @@ function Ship(x, y) {
   // Thrusters
   const thrusters = new Thrusters(this.pos, battery);
 
+  // STATUS /////////////////////////////////////////////////////////////////////////////////
+
+  this.energyFailure = false;
+
+  this.integrity = 100; // Generally speaking, status is measured as a percentage. 
+
+
 
   this.update = function() {
+
+    if (battery.charge <= 0) {
+      this.energyFailure = true;
+    }
+
     thrusters.update();
 
     if (thrusters.firing ) {
@@ -29,13 +40,13 @@ function Ship(x, y) {
 
   this.display = function() {
 
-    // Draw Ship Main Body
-    strokeWeight(0);
+    noStroke();
 
     // Indicate energy failure
     if (this.energyFailure) fill(50);
     else fill(255);
 
+    // Ship Main Body
     ellipseMode(CENTER)
     ellipse(this.pos.x, this.pos.y, this.size, this.size);
 
