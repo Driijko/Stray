@@ -7,8 +7,14 @@ function Thrusters(pos, battery) {
 
   // SPATIAL ///////////////////////////////////////////////////////////////////////
   this.maxSpeed = 2;
+  // this.maxSpeed = 8;
+
   const accelerationRate = 0.01;
+  // const accelerationRate = 0.1;
+
   const rotationSpeed = 2;
+  // const rotationSpeed = 5;
+
   this.acceleration = createVector(0, 0);
   let angle = 0;
 

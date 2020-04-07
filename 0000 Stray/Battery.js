@@ -1,6 +1,6 @@
 function Battery() {
-  const capacity = 300;
-  this.charge = capacity;
+  this.capacity = 1000;
+  this.charge = this.capacity;
   const screenPos = createVector(50, windowHeight - 50);
   let translateOffset = createVector(0, 0);
 
@@ -15,8 +15,8 @@ function Battery() {
   }
 
   this.replenish = function(amount) {
-    if (this.charge + amount >= capacity) {
-      this.charge = capacity;
+    if (this.charge + amount >= this.capacity) {
+      this.charge = this.capacity;
       return true;
     }
     else this.charge += amount;
@@ -39,7 +39,7 @@ function Battery() {
     // HUD battery current charge
     fill(255, 100, 0);
     strokeWeight(0);
-    rect(screenPos.x, screenPos.y + 2, map(this.charge, 0, capacity, 0, 198), 16);
+    rect(screenPos.x, screenPos.y + 2, Math.floor(map(this.charge, 0, this.capacity, 0, 198)), 16);
 
     pop();
   }

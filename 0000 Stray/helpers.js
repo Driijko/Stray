@@ -3,7 +3,7 @@ function logOnce(variable) {
   logged = true;
 }
 
-function fixedPos(screenPos) {
+function fixedPos() {
   let translateOffsetX = 0;
   let translateOffsetY = 0;
   if(ship.pos.x > windowWidth / 2) {

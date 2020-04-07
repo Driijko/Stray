@@ -9,10 +9,10 @@ function Ship(x, y) {
   // COMPONENTS //////////////////////////////////////////////////////////////////////////////
 
   // Battery
-  const battery = new Battery();
+  this.battery = new Battery();
 
   // Thrusters
-  const thrusters = new Thrusters(this.pos, battery);
+  const thrusters = new Thrusters(this.pos, this.battery);
 
   // STATUS /////////////////////////////////////////////////////////////////////////////////
 
@@ -24,7 +24,7 @@ function Ship(x, y) {
 
   this.update = function() {
 
-    if (battery.charge <= 0) {
+    if (this.battery.charge <= 0) {
       this.energyFailure = true;
     }
 
@@ -52,6 +52,6 @@ function Ship(x, y) {
 
     // Draw components
     thrusters.display(this.pos, this.size);
-    battery.display();
+    this.battery.display();
   }
 }
